@@ -53,7 +53,7 @@ export default function Register() {
             lastName: '',
             email: '',
             password: '',
-            confirmPassword: '',
+            retypePassword: '',
           }}
         >
           {({
@@ -80,25 +80,53 @@ export default function Register() {
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter last name" />
+                <Form.Control
+                  type="text"
+                  name="lastName"
+                  value={values.lastName}
+                  onChange={handleChange}
+                  isValid={touched.lastName && !errors.lastName}
+                  placeholder="Enter last name"
+                />
                 <p>{errors.lastName}</p>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" placeholder="Enter email" />
+                <Form.Control
+                  name="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  isValid={touched.email && !errors.email}
+                  type="email"
+                  placeholder="Enter email"
+                />
                 <p>{errors.email}</p>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control
+                  name="password"
+                  value={values.password}
+                  onChange={handleChange}
+                  isValid={touched.password && !errors.password}
+                  type="password"
+                  placeholder="Password"
+                />
                 <p>{errors.password}</p>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Confirm password</Form.Label>
-                <Form.Control type="password" placeholder="Confirm Password" />
+                <Form.Control
+                  type="password"
+                  name="retypePassword"
+                  value={values.retypePassword}
+                  onChange={handleChange}
+                  isValid={touched.retypePassword && !errors.retypePassword}
+                  placeholder="Confirm Password"
+                />
                 <p>{errors.retypePassword}</p>
               </Form.Group>
 
