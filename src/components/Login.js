@@ -4,8 +4,6 @@ import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 export default function Login() {
   const schema = yup.object().shape({
-    firstName: yup.string().required('Please enter your first name.'),
-    lastName: yup.string().required('Please enter your last name.'),
     email: yup
       .string()
       .required('Email required.')
@@ -17,10 +15,6 @@ export default function Login() {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
         'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
       ),
-    retypePassword: yup
-      .string()
-      .required('Please retype your password.')
-      .oneOf([yup.ref('password')], 'Your passwords do not match.'),
   });
   return (
     <>
@@ -47,13 +41,21 @@ export default function Login() {
       >
         <Formik
           validationSchema={schema}
-          onSubmit={console.log}
+          onSubmit={(val) => {
+            console.log(val);
+            fetch(
+              'https://express-simple-jfdzwa--3010.local.webcontainer.io/login',
+              {
+                method: 'GET',
+                headers: { email: val.email, password: val.password },
+              }
+            )
+              .then((response) => response.json())
+              .then((json) => console.log(json));
+          }}
           initialValues={{
-            firstName: '',
-            lastName: '',
             email: '',
             password: '',
-            retypePassword: '',
           }}
         >
           {({
@@ -66,31 +68,6 @@ export default function Login() {
             errors,
           }) => (
             <Form noValidate onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  isValid={touched.firstName && !errors.firstName}
-                  placeholder="Enter first name"
-                />
-                <p>{errors.firstName}</p>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastName"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  isValid={touched.lastName && !errors.lastName}
-                  placeholder="Enter last name"
-                />
-                <p>{errors.lastName}</p>
-              </Form.Group>
-
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -115,19 +92,6 @@ export default function Login() {
                   placeholder="Password"
                 />
                 <p>{errors.password}</p>
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Confirm password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="retypePassword"
-                  value={values.retypePassword}
-                  onChange={handleChange}
-                  isValid={touched.retypePassword && !errors.retypePassword}
-                  placeholder="Confirm Password"
-                />
-                <p>{errors.retypePassword}</p>
               </Form.Group>
 
               <Button variant="primary" type="submit">

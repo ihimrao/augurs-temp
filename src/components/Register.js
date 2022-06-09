@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 export default function Register() {
+  const token = localStorage.getItem('token');
   const schema = yup.object().shape({
     firstName: yup.string().required('Please enter your first name.'),
     lastName: yup.string().required('Please enter your last name.'),
