@@ -46,7 +46,7 @@ export default function Login() {
             fetch(
               'https://express-simple-jfdzwa--3010.local.webcontainer.io/login',
               {
-                method: 'GET',
+                method: 'POST',
                 headers: { email: val.email, password: val.password },
               }
             )
