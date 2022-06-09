@@ -47,11 +47,22 @@ export default function Login() {
               'https://express-simple-jfdzwa--3010.local.webcontainer.io/login',
               {
                 method: 'POST',
-                headers: { email: val.email, password: val.password },
+
+                body: {
+                  email: val.email,
+                  password: val.password,
+                },
               }
             )
               .then((response) => response.json())
-              .then((json) => console.log(json));
+              .then((json) => {
+                if (json.status === 200) {
+                  localStorage.setItem('token', json.token);
+                  localStorage.setItem('firstname', val.token);
+                  localStorage.setItem('lastname', json.token);
+                  localStorage.setItem('email', json.token);
+                }
+              });
           }}
           initialValues={{
             email: '',
